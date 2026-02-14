@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data & AI Team Survey</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00D9FF;
+            --primary-dark: #00A8CC;
+            --bg: #0A0E27;
+            --bg-card: #141B3D;
+            --text: #E8F0FF;
+            --text-muted: #8B9DC3;
+            --accent: #FF6B9D;
+            --success: #00FF88;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(0, 217, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 107, 157, 0.1) 0%, transparent 50%);
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-top: 20px;
+        }
+
+        .header h1 {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(0, 217, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0, 217, 255, 0.2);
+        }
+
+        .question-number {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            line-height: 1.5;
+            color: var(--text);
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 140px;
+            padding: 16px;
+            background: rgba(10, 14, 39, 0.6);
+            border: 2px solid rgba(0, 217, 255, 0.2);
+            border-radius: 12px;
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            resize: vertical;
+            transition: border-color 0.3s ease, background 0.3s ease;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(10, 14, 39, 0.8);
+            box-shadow: 0 0 0 4px rgba(0, 217, 255, 0.1);
+        }
+
+        textarea::placeholder {
+            color: var(--text-muted);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--bg);
+            font-family: 'Space Mono', monospace;
+            font-size: 1rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 20px rgba(0, 217, 255, 0.3);
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(0, 217, 255, 0.5);
+        }
+
+        .submit-btn:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            animation: scaleIn 0.5s ease-out;
+        }
+
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: bounce 1s ease-out;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .success-message h2 {
+            font-family: 'Space Mono', monospace;
+            color: var(--success);
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+        }
+
+        .success-message p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .form-content.hide {
+            display: none;
+        }
+
+        .char-count {
+            text-align: right;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 8px;
+            font-family: 'Space Mono', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Data & AI Team</h1>
+            <p>Share your vision for 2026</p>
+        </div>
+
+        <form id="surveyForm">
+            <div class="form-content">
+                <div class="card">
+                    <div class="question-number">Question 1 of 2</div>
+                    <h3 class="question-text">What drives you to continuously improve yourself and support the growth of those around you?</h3>
+                    <textarea 
+                        id="question1" 
+                        name="question1" 
+                        placeholder="Share your thoughts..." 
+                        required
+                        maxlength="500"
+                    ></textarea>
+                    <div class="char-count" id="charCount1">0 / 500</div>
+                </div>
+
+                <div class="card">
+                    <div class="question-number">Question 2 of 2</div>
+                    <h3 class="question-text">What's one initiative or improvement you'd like to see our business unit implement in 2026?</h3>
+                    <textarea 
+                        id="question2" 
+                        name="question2" 
+                        placeholder="Share your ideas..." 
+                        required
+                        maxlength="500"
+                    ></textarea>
+                    <div class="char-count" id="charCount2">0 / 500</div>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    Submit Response
+                </button>
+            </div>
+
+            <div class="success-message" id="successMessage">
+                <div class="success-icon">✓</div>
+                <h2>Thank you!</h2>
+                <p>Your response has been submitted successfully.</p>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Character counters
+        const textarea1 = document.getElementById('question1');
+        const textarea2 = document.getElementById('question2');
+        const charCount1 = document.getElementById('charCount1');
+        const charCount2 = document.getElementById('charCount2');
+
+        textarea1.addEventListener('input', () => {
+            charCount1.textContent = `${textarea1.value.length} / 500`;
+        });
+
+        textarea2.addEventListener('input', () => {
+            charCount2.textContent = `${textarea2.value.length} / 500`;
+        });
+
+        // Form submission
+        document.getElementById('surveyForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
+
+            const formData = {
+                question1: textarea1.value.trim(),
+                question2: textarea2.value.trim(),
+                timestamp: new Date().toISOString()
+            };
+
+            try {
+                // Store response in shared storage
+                const responseId = 'response_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                await window.storage.set(responseId, JSON.stringify(formData), true);
+
+                // Show success message
+                document.querySelector('.form-content').classList.add('hide');
+                document.getElementById('successMessage').classList.add('show');
+            } catch (error) {
+                console.error('Error submitting response:', error);
+                alert('There was an error submitting your response. Please try again.');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Submit Response';
+            }
+        });
+    </script>
+</body>
+</html>
